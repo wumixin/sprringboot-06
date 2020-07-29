@@ -5,6 +5,7 @@ import com.wmx.pojo.entity.Book;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,8 +36,16 @@ public class BookController {
 
     @ApiOperation("根据ID查询图书")
     @GetMapping("/findOne")
+    @Cacheable(cacheNames = "findBookId")
     public Book findOne(@RequestParam int id){
         Book book = bookMapper.selectByPrimaryKey(id);
         return book;
+    }
+
+    @ApiOperation("根据ID删除图书")
+    @GetMapping("/delete")
+    public int deleteOne(@RequestParam int id){
+        int i = bookMapper.deleteByPrimaryKey(id);
+        return i;
     }
 }
