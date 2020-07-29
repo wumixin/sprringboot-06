@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!-- 本地数据库驱动程序jar包的全路径，如果上一步没有在plugin标签中增加mysql数据库连接器就需要增加如下配置指定数据库连接器的位置 -->
+    <!--<classPathEntry location="C:\Users\xli\.m2\repository\mysql\mysql-connector-java\5.1.47\mysql-connector-java-5.1.47.jar"/>-->
+    <context id="MySQL" targetRuntime="MyBatis3">
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <!-- mapper位置，可以自定义 -->
+            <property name="mappers" value="com.wmx.config.MyMapper"/>
+            <!-- 数据库表名区分大小写 -->
+            <property name="caseSensitive" value="true"/>
+        </plugin>
+
+        <!--默认false，把JDBC DECIMAL和 NUMERIC 类型解析为Integer，为true时把JDBC DECIMAL和 NUMERIC解析为java.math.BigDecimal-->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <commentGenerator>
+            <!-- 去除生成的注释 -->
+            <property name="suppressAllComments" value="true"/>
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+
+        <!-- 数据库的相关配置 -->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/test" userId="root" password="123456">
+            <property name="serverTimezone" value="UTC"/>
+            <property name="nullCatalogMeansCurrent" value="true"/>
+        </jdbcConnection>
+
+
+
+        <!-- 实体类生成的位置 -->
+        <javaModelGenerator targetPackage="com.wmx.pojo.entity" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!-- *Mapper.xml 文件的位置 -->
+        <sqlMapGenerator targetPackage="com.wmx.mapper" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!-- Mapper 接口文件的位置 -->
+        <javaClientGenerator targetPackage="com.wmx.mapper" targetProject="src/main/java" type="XMLMAPPER">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!-- 表名，生成的DO的名字 -->
+        <table tableName="user" domainObjectName="User" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               enableUpdateByExample="false"/>
+    </context>
+</generatorConfiguration>
